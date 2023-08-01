@@ -1,4 +1,4 @@
-use eframe::{egui::{self, Color32}, epaint::pos2};
+use eframe::{egui::{self, Color32, plot::{self, Plot}}, epaint::pos2};
 use image;
 use egui_extras;
 use std::{path::Path, fs::OpenOptions, io::Write};
@@ -157,8 +157,16 @@ impl TaskApp {
                 ui.selectable_value(&mut self.option, Points::Second, "Second");
                 ui.selectable_value(&mut self.option, Points::Third, "Third");
             })
-        });
 
+        });
+        let sin: plot::PlotPoints = (0..1000).map(|i| {
+            let x = i as f64 * 0.01;
+            [x, x.sin()]
+        }).collect();
+        let line = plot::Line::new(sin);
+        ui.set_min_size(egui::vec2(400.0, 300.0));
+        plot::Plot::new("").width(ctx.available_rect().width()).height(200.0).view_aspect(2.0).show(ui, |plot_ui| plot_ui.line(line));
+        
     }    
 }
 

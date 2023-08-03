@@ -133,7 +133,10 @@ impl TaskApp {
 
     fn save_output(&mut self, ui: &mut egui::Ui) {
         ui.add(egui::TextEdit::singleline(&mut self.output_file_path));
-        if ui.button("Save name").clicked() && self.output_file_path.ends_with(".txt") {
+        if ui.button("Save name").clicked() {
+            if !self.output_file_path.ends_with(".txt") {
+                self.output_file_path.push_str(".txt");
+            }
             //open file for output text
             //if text with name from let output_file_path
             //is exist we write text to the end of this file
@@ -189,18 +192,20 @@ impl TaskApp {
                     ui.selectable_value(&mut self.option, Points::Third, "Third");
                 })
         });
-        let sin: plot::PlotPoints = (0..1000)
+
+        let sin: plot::PlotPoints = (-1000..1000)
             .map(|i| {
                 let x = i as f64 * 0.01;
                 [x, x.sin()]
             })
             .collect();
+
         let line = plot::Line::new(sin);
         ui.set_min_size(egui::vec2(400.0, 300.0));
         plot::Plot::new("")
             .width(ctx.available_rect().width())
             .height(200.0)
-            .view_aspect(2.0) //width/height ratio
+            .view_aspect(2.0) // width/height ratio
             .show(ui, |plot_ui| plot_ui.line(line));
 
         ScrollArea::new([true; 2])

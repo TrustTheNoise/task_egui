@@ -125,7 +125,7 @@ impl TaskApp {
                 //add Image from TextureHandle
                 ui.add(egui::Image::new(
                     texture,
-                    egui::vec2(ctx.available_rect().width() * 0.5, 300.0),
+                    egui::vec2(ctx.available_rect().width() * 0.5, 400.0),
                 ));
             })
         });
@@ -200,8 +200,9 @@ impl TaskApp {
         plot::Plot::new("")
             .width(ctx.available_rect().width())
             .height(200.0)
-            .view_aspect(2.0)
+            .view_aspect(2.0) //width/height ratio
             .show(ui, |plot_ui| plot_ui.line(line));
+
         ScrollArea::new([true; 2])
             .max_width(ctx.available_rect().width() * 0.98)
             .max_height(300.0)

@@ -133,7 +133,7 @@ impl TaskApp {
 
     fn save_output(&mut self, ui: &mut egui::Ui) {
         ui.add(egui::TextEdit::singleline(&mut self.output_file_path));
-        if ui.button("Save name").clicked() {
+        if ui.button("Done").clicked() {
             if !self.output_file_path.ends_with(".txt") {
                 self.output_file_path.push_str(".txt");
             }
